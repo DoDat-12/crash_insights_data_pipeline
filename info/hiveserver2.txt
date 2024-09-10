@@ -1,0 +1,15 @@
+docker exec -it hive-server bash
+
+hiveserver2
+
+netstat -anp | grep 10000
+
+beeline -u jdbc:hive2://localhost:10000 -n root
+
+!connect jdbc:hive2://127.0.0.1:10000 scott tiger
+
+show databases;
+
+create database crashlogs;
+
+use crashlogs;

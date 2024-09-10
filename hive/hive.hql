@@ -1,10 +1,12 @@
-CREATE DATABASE IF NOT EXISTS crash_warehouse;
+DROP DATABASE IF EXISTS crash_warehouse;
+
+CREATE DATABASE crash_warehouse;
 
 USE crash_warehouse;
 
-CREATE TABLE IF NOT EXISTS FACT_CRASH
+CREATE TABLE FACT_CRASH
 (
-    event_id          STRING PRIMARY KEY,
+    event_id          STRING,
     platform          STRING,
     error_type        STRING,
     issue_title       STRING,
@@ -21,9 +23,9 @@ CREATE TABLE IF NOT EXISTS FACT_CRASH
     STORED AS TEXTFILE LOCATION '/output/fact_crash'
     TBLPROPERTIES ("skip.header.line.count" = "1");
 
-CREATE TABLE IF NOT EXISTS DIM_APP
+CREATE TABLE DIM_APP
 (
-    app_id          INT PRIMARY KEY,
+    app_id          INT,
     build_version   STRING,
     display_version STRING
 )
@@ -31,9 +33,9 @@ CREATE TABLE IF NOT EXISTS DIM_APP
     STORED AS TEXTFILE LOCATION '/output/dim_app'
     TBLPROPERTIES ("skip.header.line.count" = "1");
 
-CREATE TABLE IF NOT EXISTS DIM_DATE
+CREATE TABLE DIM_DATE
 (
-    date_key        INT PRIMARY KEY,
+    date_key        INT,
     day             DATE,
     day_of_the_week STRING,
     week            INT,
@@ -44,9 +46,9 @@ CREATE TABLE IF NOT EXISTS DIM_DATE
     STORED AS TEXTFILE LOCATION '/output/dim_date'
     TBLPROPERTIES ("skip.header.line.count" = "1");
 
-CREATE TABLE IF NOT EXISTS DIM_DEVICE
+CREATE TABLE DIM_DEVICE
 (
-    device_id    INT PRIMARY KEY,
+    device_id    INT,
     manufacturer STRING,
     model        STRING,
     architecture STRING
@@ -55,9 +57,9 @@ CREATE TABLE IF NOT EXISTS DIM_DEVICE
     STORED AS TEXTFILE LOCATION '/output/dim_device'
     TBLPROPERTIES ("skip.header.line.count" = "1");
 
-CREATE TABLE IF NOT EXISTS DIM_OS
+CREATE TABLE DIM_OS
 (
-    os_id              INT PRIMARY KEY,
+    os_id              INT,
     display_version    STRING,
     name               STRING,
     modification_state STRING,
@@ -66,3 +68,5 @@ CREATE TABLE IF NOT EXISTS DIM_OS
     ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
     STORED AS TEXTFILE LOCATION '/output/dim_os'
     TBLPROPERTIES ("skip.header.line.count" = "1");
+
+SHOW TABLES;

@@ -22,6 +22,7 @@ object Main {
         col("application").getField("display_version").alias("display_version")
       ).distinct()
       .withColumn("app_id", monotonically_increasing_id()) // surrogate key
+      .select("app_id", "build_version", "display_version")
 
     val date_df = df.select(col("day"))
       .withColumn("date_key", date_format(col("day"), "MMddyyyy").cast("integer")) // foreign key
@@ -30,6 +31,7 @@ object Main {
       .withColumn("month", month(col("day")))
       .withColumn("year", year(col("day")))
       .distinct()
+      .select("date_key", "day", "day_of_the_week", "week", "month", "year")
 
     val devide_df = df.select(
         col("device").getField("manufacturer").alias("manufacturer"),
@@ -37,6 +39,7 @@ object Main {
         col("device").getField("architecture").alias("architecture")
       ).distinct()
       .withColumn("device_id", monotonically_increasing_id()) // surrogate key
+      .select("device_id", "manufacturer", "model", "architecture")
 
     val os_df = df.select(
         col("operating_system").getField("display_version").alias("display_version"),
@@ -45,6 +48,7 @@ object Main {
         col("operating_system").getField("device_type").alias("device_type")
       ).distinct()
       .withColumn("os_id", monotonically_increasing_id()) // surrogate key
+      .select("os_id", "display_version", "name", "modification_state", "device_type")
 
     val fact_df = df
       .join(app_df, (df.col("application").getField("display_version") === app_df.col("display_version")) && (df.col("application").getField("build_version") === app_df.col("build_version")), "inner")

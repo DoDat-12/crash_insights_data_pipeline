@@ -26,6 +26,8 @@ Load and run Spark job
 
 ## Building Data Warehouse with Hive
 
+![hive_schema.png](info%2Fhive_schema.png)
+
 Go to the command line of the Hive server and run hive scripts
 
     docker exec -it hive-server bash
